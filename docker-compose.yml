@@ -1,8 +1,9 @@
 version: '3.8'
 
 services:
-  mysql-db:
+  mysql-courses:
     image: mysql:8.0
+    container_name: mysql-courses
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: learnify
@@ -11,13 +12,30 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-courses:/var/lib/mysql
     networks:
       - app-network
+
+  mysql-users:
+    image: mysql:8.0
+    container_name: mysql-users
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: learnify
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-users:/var/lib/mysql
+    networks:
+      - app-network
+
 
 networks:
   app-network:
     driver: bridge
 
 volumes:
-  mysql-data:
+  mysql-courses:
+  mysql-users:

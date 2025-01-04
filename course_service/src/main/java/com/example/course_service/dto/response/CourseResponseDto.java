@@ -3,19 +3,21 @@ package com.example.course_service.dto.response;
 import com.example.course_service.model.Course;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class CourseResponseDto {
     private Long id;
     private String name;
     private String description;
-    private String price;
+    private Double price;
     private Long creatorId;
     private Integer timesBought;
     private Double rating;
-    private List<String> categories;
+    private Set<String> categories;
 
-    //private Set<CourseModule> modules;
+    private Set<CourseModuleResponseDto> modules;
 
 
     public Long getId() {
@@ -42,11 +44,11 @@ public class CourseResponseDto {
         this.description = description;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -74,12 +76,20 @@ public class CourseResponseDto {
         this.rating = rating;
     }
 
-    public List<String> getCategories() {
+    public Set<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<String> categories) {
+    public void setCategories(Set<String> categories) {
         this.categories = categories;
+    }
+
+    public Set<CourseModuleResponseDto> getModules() {
+        return modules;
+    }
+
+    public void setModules(Set<CourseModuleResponseDto> modules) {
+        this.modules = modules;
     }
 
     public static CourseResponseDto getDto(Course course){
@@ -92,6 +102,10 @@ public class CourseResponseDto {
         dto.setRating(course.getRating());
         dto.setTimesBought(course.getTimesBought());
         dto.setPrice(course.getPrice());
+
+        dto.setModules(course.getModules()
+                .stream().map(i -> CourseModuleResponseDto.getDto(i))
+                .collect(Collectors.toSet()));
 
         return dto;
     }

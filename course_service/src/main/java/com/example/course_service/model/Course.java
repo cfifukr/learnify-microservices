@@ -3,6 +3,7 @@ package com.example.course_service.model;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,13 +14,13 @@ public class Course {
     private Long id;
     private String name;
     private String description;
-    private String price;
+    private Double price;
     private Long creatorId;
     private Integer timesBought;
     private Double rating;
 
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
-    private List<String> categories = new ArrayList<>();
+    private Set<String> categories = new HashSet<>();
 
     @OneToMany(mappedBy="course")
     private Set<CourseModule> modules;
@@ -49,11 +50,11 @@ public class Course {
         this.description = description;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -81,11 +82,11 @@ public class Course {
         this.rating = rating;
     }
 
-    public List<String> getCategories() {
+    public Set<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<String> categories) {
+    public void setCategories(Set<String> categories) {
         this.categories = categories;
     }
 
