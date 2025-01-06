@@ -5,7 +5,6 @@ import com.example.user_service.dto.request.UserCreateDto;
 import com.example.user_service.dto.response.UserResponseDto;
 import com.example.user_service.model.User;
 import com.example.user_service.service.UserService;
-import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/user")
-public class UserCotroller {
+public class UserController {
     private UserService userService;
 
 
@@ -29,7 +28,7 @@ public class UserCotroller {
         return ResponseEntity.ok(UserResponseDto.getDto(userOpt.get()));
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UserCreateDto dto,
                                         Principal principal){
         User user = userService.createUser(dto, principal.getName());
