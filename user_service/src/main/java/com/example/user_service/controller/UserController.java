@@ -16,6 +16,10 @@ import java.util.Optional;
 public class UserController {
     private UserService userService;
 
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
+
 
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable Long userId){
