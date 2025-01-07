@@ -13,15 +13,20 @@ public class UserCreateDto {
     private String name;
     private String surname;
     private String email;
+
+    private String password;
+
     private String role;
+
 
     public UserCreateDto() {
     }
 
-    public UserCreateDto(String name, String surname, String email, String role) {
+    public UserCreateDto(String name, String surname, String email, String password, String role) {
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.password = password;
         this.role = role;
     }
 
@@ -55,6 +60,14 @@ public class UserCreateDto {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public User createUser(String keycloakId, Role role){

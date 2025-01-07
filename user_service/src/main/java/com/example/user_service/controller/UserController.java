@@ -5,6 +5,7 @@ import com.example.user_service.dto.request.UserCreateDto;
 import com.example.user_service.dto.response.UserResponseDto;
 import com.example.user_service.model.User;
 import com.example.user_service.service.UserService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,11 +33,5 @@ public class UserController {
         return ResponseEntity.ok(UserResponseDto.getDto(userOpt.get()));
     }
 
-    @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody UserCreateDto dto,
-                                        Principal principal){
-        User user = userService.createUser(dto, principal.getName());
 
-        return ResponseEntity.ok(UserResponseDto.getDto(user));
-    }
 }
