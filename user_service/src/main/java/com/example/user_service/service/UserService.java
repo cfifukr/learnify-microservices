@@ -41,12 +41,7 @@ public class UserService {
 
     public User createUser(UserCreateDto userCreateDto, String keycloakId){
 
-        Optional<Role> roleOpt = roleRepository.findRoleByRole(userCreateDto.getRole().toUpperCase().trim());
-        if(roleOpt.isEmpty()){
-            throw new RoleNotFoundException("This role doesnt exist");
-        }
-
-        User user = userCreateDto.createUser(keycloakId, roleOpt.get());
+        User user = userCreateDto.createUser(keycloakId);
 
         return userRepository.save(user);
 

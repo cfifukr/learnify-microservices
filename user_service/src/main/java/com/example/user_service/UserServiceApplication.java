@@ -30,11 +30,11 @@ public class UserServiceApplication implements CommandLineRunner {
         roleRepository.save(role);
 
         User user1 = new User("Name", "Surname",
-                "Email@gmail.com", "Keycloack1", role);
+                "Email@gmail.com", "Keycloack1");
         userRepository.save(user1);
 
         User user2 = new User("Name2", "Surname2",
-                "Email2@gmail.com", "Keycloack2", role);
+                "Email2@gmail.com", "Keycloack2");
         userRepository.save(user2);
 
 

@@ -18,19 +18,16 @@ public class User {
     private String keycloakId;
     private Double balance;
 
-    @ManyToOne
-    private Role role;
 
     public User() {
     }
 
-    public User(String name, String surname, String email, String keycloakId, Role role) {
+    public User(String name, String surname, String email, String keycloakId) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.keycloakId = keycloakId;
         this.balance = 0.00;
-        this.role = role;
     }
 
     public Long getId() {
@@ -81,11 +78,15 @@ public class User {
         this.balance = balance;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", keycloakId='" + keycloakId + '\'' +
+                ", balance=" + balance +
+                '}';
     }
 }
