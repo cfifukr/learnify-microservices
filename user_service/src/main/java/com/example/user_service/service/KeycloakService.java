@@ -1,15 +1,22 @@
 package com.example.user_service.service;
 
+import com.example.user_service.dto.response.TokenResponse;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.admin.client.resource.RoleMappingResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
+import java.util.Map;
 
 
 @Service
@@ -35,6 +42,12 @@ public class KeycloakService {
 
     @Value("${keycloak.default-role}")
     private String defaultRole;
+
+    private final RestTemplate restTemplate;
+
+    public KeycloakService(RestTemplateBuilder restTemplateBuilder) {
+        this.restTemplate = restTemplateBuilder.build();
+    }
 
 
     public String registerUser(String username, String email, String firstName, String lastName, String password) {
@@ -71,6 +84,41 @@ public class KeycloakService {
         roleMappingResource.realmLevel().add(Collections.singletonList(role));
 
         return userId;
+    }
+
+    public TokenResponse getToken(String username, String password) {
+
+        String url = keycloakServerUrl + "/realms/" + realm + "/protocol/openid-connect/token";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "password");
+        body.add("client_id", clientId);
+        body.add("client_secret", clientSecret);
+        body.add("username", username);
+        body.add("password", password);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+
+        try {
+            ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
+
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                Map<String, Object> responseBody = response.getBody();
+                return new TokenResponse(
+                        (String) responseBody.get("access_token"),
+                        (String) responseBody.get("refresh_token"),
+                        ((Number) responseBody.get("expires_in")).longValue(),
+                        ((Number) responseBody.get("refresh_expires_in")).longValue()
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
 

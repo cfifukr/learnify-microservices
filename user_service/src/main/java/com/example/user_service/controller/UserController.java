@@ -2,11 +2,14 @@ package com.example.user_service.controller;
 
 
 import com.example.user_service.dto.request.UserCreateDto;
+import com.example.user_service.dto.response.TokenResponse;
 import com.example.user_service.dto.response.UserResponseDto;
 import com.example.user_service.model.User;
 import com.example.user_service.service.KeycloakService;
 import com.example.user_service.service.UserService;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +42,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/register")
+    @PostMapping(value = "/register")
     public ResponseEntity<?> register(@RequestBody UserCreateDto request) {
         String keycloakId =  keycloakService.registerUser(
                 request.getUsername(),
@@ -54,5 +57,17 @@ public class UserController {
 
         return ResponseEntity.ok(UserResponseDto.getDto(user));
     }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<?> login(@RequestBody UserCreateDto request) {
+        TokenResponse tokenResponse = keycloakService.getToken(request.getUsername(), request.getPassword());
+
+        if (tokenResponse == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        }
+
+        return ResponseEntity.ok(tokenResponse);
+    }
+
 
 }

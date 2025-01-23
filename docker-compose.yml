@@ -1,41 +1,42 @@
-version: '3.8'
+version: '3.9'
 
 services:
-  mysql-courses:
+  mysql-course:
     image: mysql:8.0
-    container_name: mysql-courses
+    container_name: mysql-course
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: learnify_courses
-      MYSQL_USER: user
+      MYSQL_DATABASE: learnify
       MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
     volumes:
-      - mysql-courses:/var/lib/mysql
-    networks:
-      - app-network
+      - mysql-courses-data:/var/lib/mysql
 
   mysql-users:
     image: mysql:8.0
     container_name: mysql-users
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: learnify_users
-      MYSQL_USER: user
+      MYSQL_DATABASE: learnify
       MYSQL_PASSWORD: password
     ports:
       - "3307:3306"
     volumes:
-      - mysql-users:/var/lib/mysql
-    networks:
-      - app-network
+      - mysql-users-data:/var/lib/mysql
 
-
-networks:
-  app-network:
-    driver: bridge
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.1
+    container_name: keycloak
+    environment:
+      KC_DB: dev-file
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command:
+      - start-dev
+    ports:
+      - "8080:8080"
 
 volumes:
-  mysql-courses:
-  mysql-users:
+  mysql-users-data:
+  mysql-courses-data:
