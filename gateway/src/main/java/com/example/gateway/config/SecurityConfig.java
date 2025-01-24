@@ -21,6 +21,7 @@ public class SecurityConfig {
                         .pathMatchers("/api/v1/course/**").hasRole("ADMIN")
                         .pathMatchers("/api/v1/user/register").permitAll()
                         .pathMatchers("/api/v1/user/login").permitAll()
+                        .pathMatchers("/api/v1/mail/sendMail").permitAll()
                         .anyExchange().authenticated()
                 )
                 .oauth2Login(withDefaults())
