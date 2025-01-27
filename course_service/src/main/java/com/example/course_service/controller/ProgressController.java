@@ -1,9 +1,13 @@
 package com.example.course_service.controller;
 
 import com.example.course_service.dto.response.CourseProgressResponseDto;
+import com.example.course_service.dto.response.ModuleProgressResponseDto;
+import com.example.course_service.dto.update.ModuleProgressUpdateDto;
 import com.example.course_service.model.CourseProgress;
+import com.example.course_service.model.ModuleProgress;
 import com.example.course_service.service.CourseProgressService;
 
+import com.example.course_service.service.ModuleProgressService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +15,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/progress")
 public class ProgressController {
     private final CourseProgressService courseProgressService;
+    private final ModuleProgressService moduleProgressService;
 
-    public ProgressController(CourseProgressService courseProgressService) {
+    public ProgressController(CourseProgressService courseProgressService,
+                              ModuleProgressService moduleProgressService) {
         this.courseProgressService = courseProgressService;
+        this.moduleProgressService = moduleProgressService;
+    }
+
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<?> getCourseProgress(@PathVariable("courseId") Long courseId) {
+        CourseProgress courseProgress = courseProgressService.getCourseProgressById(courseId);
+
+        return ResponseEntity.ok(CourseProgressResponseDto.getDtoWithModules(courseProgress));
     }
 
     @PostMapping("/course/{courseId}")
@@ -26,4 +40,29 @@ public class ProgressController {
         return ResponseEntity.ok(CourseProgressResponseDto.getDtoWithModules(courseProgress));
 
     };
+
+
+    @GetMapping("/module/{moduleId}")
+    private ResponseEntity<?> getModuleById(@PathVariable Long moduleId) {
+
+        ModuleProgress moduleProgress = moduleProgressService.getModuleProgressById(moduleId);
+
+        return ResponseEntity.ok(ModuleProgressResponseDto.getDto(moduleProgress));
+
+    };
+
+    @PutMapping("/module/{moduleId}")
+    private ResponseEntity<?> updateModule(@RequestBody ModuleProgressUpdateDto dto,
+                                           @PathVariable Long moduleId) {
+
+        ModuleProgress moduleProgress = moduleProgressService.updateModuleProgress(dto, moduleId);
+
+        return ResponseEntity.ok(ModuleProgressResponseDto.getDto(moduleProgress));
+
+    };
+
+
+
+
+
 }

@@ -1,5 +1,8 @@
 package com.example.course_service.service;
 
+import com.example.course_service.exceptions.CourseNotFoundException;
+import com.example.course_service.exceptions.ModuleNotFoundException;
+import com.example.course_service.exceptions.WrongUserException;
 import com.example.course_service.model.Course;
 import com.example.course_service.model.CourseProgress;
 import com.example.course_service.model.ModuleProgress;
@@ -8,6 +11,8 @@ import com.example.course_service.repository.ModuleProgressRepository;
 import com.example.course_service.utils.CourseProgressBuilder;
 import com.example.course_service.utils.JwtUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public class CourseProgressService {
@@ -42,6 +47,13 @@ public class CourseProgressService {
 
         return  courseProgressRepository.save(courseProgress);
 
-
     }
+
+    public CourseProgress getCourseProgressById(Long courseProgressId) {
+        return courseProgressRepository.findById(courseProgressId)
+                .orElseThrow(() -> new CourseNotFoundException("CourseProgress with id " + courseProgressId + " not found"));
+    }
+
+
+
 }

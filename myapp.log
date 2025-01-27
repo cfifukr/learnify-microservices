@@ -2032,3 +2032,67 @@ Caused by: java.lang.ClassCastException: class java.lang.Integer cannot be cast 
 2025-01-27T16:51:51.480+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
 2025-01-27T17:12:34.174+02:00  WARN 36407 --- [user-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=19m43s383ms).
 2025-01-27T17:16:04.877+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T17:21:04.891+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T17:37:33.518+02:00  WARN 36407 --- [user-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m28s846ms).
+2025-01-27T17:53:33.000+02:00  WARN 36407 --- [user-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m59s481ms).
+2025-01-27T17:56:33.608+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T18:01:33.630+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T18:06:33.646+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T18:11:33.656+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T18:16:33.669+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T18:21:33.683+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T18:26:33.700+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T18:31:33.732+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T18:36:33.748+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T18:41:33.757+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T18:46:33.770+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T18:51:33.782+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T18:56:33.801+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T19:06:20.562+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T19:06:20.656+02:00  WARN 36407 --- [user-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m16s752ms).
+2025-01-27T19:11:20.554+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T19:16:20.561+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T19:21:20.567+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T19:26:20.585+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T19:45:19.257+02:00  WARN 36407 --- [user-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m58s327ms).
+2025-01-27T19:46:48.941+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T19:51:48.953+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T19:56:48.968+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T20:01:48.974+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T20:06:48.983+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T20:11:48.995+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T20:16:49.008+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T20:21:49.022+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T20:26:49.036+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T20:31:49.045+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T20:36:49.062+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T20:41:49.077+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T20:46:49.108+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T20:51:49.126+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T21:01:50.878+02:00  WARN 36407 --- [user-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6m30s627ms).
+2025-01-27T21:02:00.404+02:00  INFO 36407 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER-SERVICE/192.168.0.242:user-service:0 - Re-registering apps/USER-SERVICE
+2025-01-27T21:02:00.406+02:00  INFO 36407 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER-SERVICE/192.168.0.242:user-service:0: registering service...
+2025-01-27T21:02:00.427+02:00  INFO 36407 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER-SERVICE/192.168.0.242:user-service:0 - registration status: 204
+2025-01-27T21:02:49.749+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T21:08:37.640+02:00  WARN 36407 --- [user-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m16s735ms).
+2025-01-27T21:11:36.488+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T21:16:36.503+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T21:22:14.405+02:00  WARN 36407 --- [user-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m36s661ms).
+2025-01-27T21:22:43.175+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T21:27:43.187+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T21:32:43.201+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T21:53:06.287+02:00  WARN 36407 --- [user-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=19m51s786ms).
+2025-01-27T22:12:47.823+02:00  INFO 36407 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER-SERVICE/192.168.0.242:user-service:0 - Re-registering apps/USER-SERVICE
+2025-01-27T22:12:47.826+02:00  INFO 36407 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER-SERVICE/192.168.0.242:user-service:0: registering service...
+2025-01-27T22:12:47.865+02:00  INFO 36407 --- [user-service] [DiscoveryClient-HeartbeatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_USER-SERVICE/192.168.0.242:user-service:0 - registration status: 204
+2025-01-27T22:16:45.658+02:00  WARN 36407 --- [user-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=21m39s368ms).
+2025-01-27T22:18:14.340+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T22:23:14.349+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T22:28:14.364+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T22:33:14.376+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T22:38:14.357+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T22:43:14.365+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T22:45:39.992+02:00  INFO 36407 --- [user-service] [http-nio-auto-1-exec-8] c.e.u.controller.UserController          : User spring logged in
+2025-01-27T22:48:14.376+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T22:53:14.388+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-01-27T22:58:14.401+02:00  INFO 36407 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
