@@ -18,7 +18,6 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/api/v1/course/**").hasRole("ADMIN")
                         .pathMatchers("/api/v1/user/register").permitAll()
                         .pathMatchers("/api/v1/user/login").permitAll()
                         .pathMatchers("/api/v1/mail/sendMail").permitAll()

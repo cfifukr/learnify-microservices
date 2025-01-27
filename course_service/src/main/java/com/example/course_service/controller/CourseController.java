@@ -39,15 +39,10 @@ public class CourseController {
     @GetMapping("/{courseId}")
     private ResponseEntity<?> getCourseById(@PathVariable Long courseId){
 
-        Optional<Course> courseOpt = courseService.getCourseById(courseId);
-
-
-        if(courseOpt.isEmpty()){
-            return ResponseEntity.noContent().build();
-        }
+        Course courseOpt = courseService.getCourseById(courseId);
 
         return ResponseEntity.ok(
-                CourseResponseDto.getDto(courseOpt.get()) // optional -> object -> dto
+                CourseResponseDto.getDto(courseOpt)
         );
 
 

@@ -2,6 +2,7 @@ package com.example.course_service.controller;
 
 import com.example.course_service.dto.PageDto;
 import com.example.course_service.dto.create.CourseModuleCreateDto;
+import com.example.course_service.dto.response.CourseModuleResponseDto;
 import com.example.course_service.model.Course;
 import com.example.course_service.model.CourseModule;
 import com.example.course_service.service.CourseModuleService;
@@ -35,16 +36,22 @@ public class CourseModuleController {
 
     }
 
+    @GetMapping("/{moduleId}")
+    public ResponseEntity<?> getModulesById(@PathVariable Long moduleId){
+        CourseModule courseModule = courseModuleService.getModuleById(moduleId);
+        return ResponseEntity.ok(CourseModuleResponseDto.getDto(courseModule));
+    }
+
+
+
     @PostMapping("/course/{courseId}")
     public ResponseEntity<?> addModuleForCourse(@PathVariable Long courseId,
                                                 @RequestBody CourseModuleCreateDto createDto){
 
-        Optional<Course> courseOpt = courseService.getCourseById(courseId);
-        if(courseOpt.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
+        Course course = courseService.getCourseById(courseId);
 
-        CourseModule courseModule = courseModuleService.createModule(createDto, courseOpt.get());
+
+        CourseModule courseModule = courseModuleService.createModule(createDto, course);
 
         return ResponseEntity.ok(courseModule);
 

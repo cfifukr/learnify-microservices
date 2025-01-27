@@ -22,7 +22,7 @@ public class Course {
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     private Set<String> categories = new HashSet<>();
 
-    @OneToMany(mappedBy="course")
+    @OneToMany(mappedBy="course", fetch = FetchType.EAGER)
     private Set<CourseModule> modules;
 
 

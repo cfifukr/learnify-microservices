@@ -2,8 +2,11 @@ package com.example.course_service;
 
 import com.example.course_service.model.Course;
 import com.example.course_service.model.CourseModule;
+import com.example.course_service.model.Task;
+import com.example.course_service.model.VideoTask;
 import com.example.course_service.repository.CourseModuleRepository;
 import com.example.course_service.repository.CourseRepository;
+import com.example.course_service.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,6 +25,9 @@ public class CourseServiceApplication implements CommandLineRunner {
 
     @Autowired
     private CourseModuleRepository courseModuleRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(CourseServiceApplication.class, args);
@@ -52,6 +58,32 @@ public class CourseServiceApplication implements CommandLineRunner {
         CourseModule module5 = new CourseModule("Functions", 200, course2, 2);
 
         courseModuleRepository.saveAll(List.of(module1, module2, module3, module4, module5));
+
+        Task task = new VideoTask();
+        task.setTitle("Task 1");
+        task.setDescription("Task 1");
+        task.setCourseModule(module1);
+        module1.addTast(task);
+        task.setTest(false);
+
+        Task task2 = new VideoTask();
+        task2.setTitle("Task 2");
+        task2.setDescription("Task 2");
+        task2.setCourseModule(module1);
+        module1.addTast(task2);
+        task2.setTest(false);
+
+        Task task3 = new VideoTask();
+        task3.setTitle("Task 3");
+        task3.setDescription("Task 3");
+        task3.setCourseModule(module2);
+        module2.addTast(task3);
+        task3.setTest(false);
+
+        taskRepository.saveAll(List.of(task, task2, task3));
+        courseModuleRepository.saveAll(List.of(module1, module2, module3, module4, module5));
+
+
 
 
 

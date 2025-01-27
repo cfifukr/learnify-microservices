@@ -2,9 +2,10 @@ package com.example.course_service.model;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type")
 public abstract class Task {
 
     @Id
@@ -12,11 +13,71 @@ public abstract class Task {
     private Long id;
 
     private String title;
-    private String text;
-    private Boolean isFinished;
+    private String description;
     private Boolean isTest;
-    private Double mark;
-    private Boolean isPassed;
 
+    @ManyToOne
+    private CourseModule courseModule;
 
+    public Task(Long id, String title, String description, Boolean isTest, CourseModule courseModule) {
+        this.courseModule = courseModule;
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.isTest = isTest;
+    }
+
+    public Task() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Boolean getTest() {
+        return isTest;
+    }
+
+    public void setTest(Boolean test) {
+        isTest = test;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public CourseModule getCourseModule() {
+        return courseModule;
+    }
+
+    public void setCourseModule(CourseModule courseModule) {
+        this.courseModule = courseModule;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(id, task.id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(isTest, task.isTest) && Objects.equals(courseModule, task.courseModule);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, isTest);
+    }
 }

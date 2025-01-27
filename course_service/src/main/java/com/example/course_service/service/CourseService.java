@@ -35,8 +35,9 @@ public class CourseService {
     }
 
 
-    public Optional<Course> getCourseById(Long id) throws CourseNotFoundException{
-        return  courseRepository.findById(id);
+    public Course getCourseById(Long id) throws CourseNotFoundException{
+        return  courseRepository.findById(id)
+                .orElseThrow(()-> new CourseNotFoundException("Course with id " + id + " not found"));
     }
 
     public Course saveCourse(CourseCreateDto courseCreateDto){

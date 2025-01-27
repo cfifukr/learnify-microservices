@@ -4,6 +4,7 @@ import com.example.course_service.dto.PageDto;
 import com.example.course_service.dto.create.CourseModuleCreateDto;
 import com.example.course_service.dto.response.CourseModuleResponseDto;
 import com.example.course_service.dto.response.CourseResponseDto;
+import com.example.course_service.exceptions.CourseNotFoundException;
 import com.example.course_service.model.Course;
 import com.example.course_service.model.CourseModule;
 import com.example.course_service.repository.CourseModuleRepository;
@@ -35,6 +36,11 @@ public class CourseModuleService {
             CourseModule courseModule = createDto.getCourseModule(course);
 
         return courseModuleRepository.save(courseModule);
+    }
+
+
+    public CourseModule getModuleById(Long id){
+        return courseModuleRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Course not found with id: " + id));
     }
 
 
