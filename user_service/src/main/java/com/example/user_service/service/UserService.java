@@ -14,13 +14,10 @@ import java.util.Optional;
 @Service
 public class UserService {
     private UserRepository userRepository;
-    private RoleRepository roleRepository;
 
 
-    public UserService(UserRepository userRepository,
-                       RoleRepository roleRepository){
+    public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
     }
 
 

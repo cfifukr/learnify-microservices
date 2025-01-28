@@ -35,6 +35,9 @@ public class UserServiceApplication implements CommandLineRunner {
 
         User user2 = new User("Name2", "Surname2",
                 "Email2@gmail.com", "Keycloack2");
+        user2.addCourseEnrolled(2432432+"");
+        user2.addCourseEnrolled(3+"");
+        user2.addCourseEnrolled(354235249+"");
         userRepository.save(user2);
 
 

@@ -1,6 +1,7 @@
 package com.example.user_service.service;
 
 import com.example.user_service.dto.response.TokenResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.admin.client.resource.RoleMappingResource;
@@ -19,7 +20,9 @@ import java.util.Collections;
 import java.util.Map;
 
 
+
 @Service
+@Slf4j
 public class KeycloakService {
 
     @Value("${keycloak.auth-server-url}")
@@ -83,6 +86,8 @@ public class KeycloakService {
         RoleMappingResource roleMappingResource = keycloak.realm(realm).users().get(userId).roles();
         roleMappingResource.realmLevel().add(Collections.singletonList(role));
 
+        log.info("User created: {}", username);
+
         return userId;
     }
 
@@ -117,6 +122,8 @@ public class KeycloakService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        log.info("User not found with username {} and password {}", username, password);
 
         return null;
     }

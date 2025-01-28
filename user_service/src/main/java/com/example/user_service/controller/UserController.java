@@ -7,16 +7,15 @@ import com.example.user_service.dto.response.UserResponseDto;
 import com.example.user_service.model.User;
 import com.example.user_service.service.KeycloakService;
 import com.example.user_service.service.UserService;
-import org.springframework.http.HttpHeaders;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
-import java.security.Principal;
-import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("api/v1/user")
 public class UserController {
@@ -42,6 +41,7 @@ public class UserController {
     }
 
 
+
     @PostMapping(value = "/register")
     public ResponseEntity<?> register(@RequestBody UserCreateDto request) {
         String keycloakId =  keycloakService.registerUser(
@@ -60,14 +60,22 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> login(@RequestBody UserCreateDto request) {
-        TokenResponse tokenResponse = keycloakService.getToken(request.getUsername(), request.getPassword());
 
-        if (tokenResponse == null) {
+
+        try {
+            TokenResponse tokenResponse = keycloakService.getToken(request.getUsername(), request.getPassword());
+            log.info("User {} logged in", request.getUsername());
+            return ResponseEntity.ok(tokenResponse);
+
+        }catch (HttpClientErrorException exception){
+
+            log.info("User {} couldn`t login", request.getUsername());
+
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+
         }
 
-        return ResponseEntity.ok(tokenResponse);
-    }
 
+    }
 
 }

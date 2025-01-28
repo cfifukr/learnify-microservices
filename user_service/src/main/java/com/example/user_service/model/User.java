@@ -1,6 +1,13 @@
 package com.example.user_service.model;
 
+import com.example.user_service.utils.StringListConverter;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 
 @Entity
 public class User {
@@ -18,6 +25,10 @@ public class User {
     private String keycloakId;
     private Double balance;
 
+    @Convert(converter = StringListConverter.class)
+    private List<String> coursesEnrolledIds = new ArrayList<>();
+
+
 
     public User() {
     }
@@ -28,6 +39,25 @@ public class User {
         this.email = email;
         this.keycloakId = keycloakId;
         this.balance = 0.00;
+    }
+
+
+
+    public boolean addCourseEnrolled(String id){
+        if(coursesEnrolledIds.size() >= 25){return false;}
+
+        coursesEnrolledIds.add(id);
+        return true;
+
+    }
+
+    public void deleteCourseEnrolled(String id){
+        coursesEnrolledIds.remove(id);
+    }
+
+
+    public List<String> getCoursesEnrolledIds() {
+        return coursesEnrolledIds;
     }
 
     public Long getId() {
