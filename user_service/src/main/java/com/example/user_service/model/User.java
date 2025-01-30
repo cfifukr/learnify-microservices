@@ -4,9 +4,7 @@ import com.example.user_service.utils.StringListConverter;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
@@ -47,6 +45,7 @@ public class User {
         if(coursesEnrolledIds.size() >= 25){return false;}
 
         coursesEnrolledIds.add(id);
+
         return true;
 
     }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/v1/module")
+@RequestMapping("/api/v1/module")
 public class CourseModuleController {
 
     private CourseModuleService courseModuleService;

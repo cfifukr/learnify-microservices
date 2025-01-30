@@ -5,11 +5,13 @@ import com.example.user_service.exception.UserNotFoundException;
 import com.example.user_service.model.User;
 import com.example.user_service.repository.UserRepository;
 import com.example.user_service.utils.JwtUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -24,7 +26,10 @@ public class UserCourseService {
     private final JwtUtils jwtUtils = new JwtUtils();
 
 
-    private final String baseUrlCourse = "http://COURSE-SERVICE/api/v1/courses";
+    private final String baseUrlCourse = "http://COURSE-SERVICE";
+
+    @Value("${url.course-service.course-progress}")
+    private String progressUrl;
 
     public UserCourseService(UserRepository userRepository,
                              RestTemplate restTemplate) {
@@ -39,29 +44,34 @@ public class UserCourseService {
         User user = userRepository.findByKeycloakId(keycloakId)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + keycloakId + " not found"));
 
-        if(!user.addCourseEnrolled(courseId)){
-            throw new EnrollmentLimitExceededException("Enrollment limit exceeded. User already enrolled on 25 courses");
-        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
         headers.setContentType(MediaType.APPLICATION_JSON);
-
         HttpEntity<Object> httpEntity = new HttpEntity<>(headers);
 
+        String url = new StringBuilder()
+                .append(baseUrlCourse)
+                .append(progressUrl)
+                .append("/course/")
+                .append(courseId).toString();
         try {
             ResponseEntity<String> response = restTemplate.exchange(
-                    baseUrlCourse,
+                    url,
                     HttpMethod.POST,
                     httpEntity,
                     String.class
             );
 
+            System.out.println(response.getBody());
+            user.addCourseEnrolled(response.getBody());
+
 
         } catch (Exception ex) {
-            System.err.println("Error calling course service: " + ex.getMessage());
+            ex.printStackTrace();
             return null;
         }
+
         return userRepository.save(user).getCoursesEnrolledIds();
 
     }
