@@ -1,8 +1,10 @@
 package com.example.course_service.controller;
 
 import com.example.course_service.dto.response.CourseProgressResponseDto;
+import com.example.course_service.dto.response.CourseResponseDto;
 import com.example.course_service.dto.response.ModuleProgressResponseDto;
 import com.example.course_service.dto.update.ModuleProgressUpdateDto;
+import com.example.course_service.model.Course;
 import com.example.course_service.model.CourseProgress;
 import com.example.course_service.model.ModuleProgress;
 import com.example.course_service.service.CourseProgressService;
@@ -10,6 +12,8 @@ import com.example.course_service.service.CourseProgressService;
 import com.example.course_service.service.ModuleProgressService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
 
 @RestController
 @RequestMapping("/api/v1/progress")
@@ -30,6 +34,16 @@ public class ProgressController {
         return ResponseEntity.ok(CourseProgressResponseDto.getDtoWithModules(courseProgress));
     }
 
+    @GetMapping("/course/{courseId}/course")
+    public ResponseEntity<?> getCourseByCourseProgressId(@PathVariable("courseId") Long courseProgressId) {
+
+        Course course = courseProgressService.getCourseByCourseProgressId(courseProgressId);
+        course.setModules(null);
+        return ResponseEntity.ok(
+                CourseResponseDto.getDto(course)
+        );
+    }
+
     @PostMapping("/course/{courseId}")
     private ResponseEntity<?> createCourseProgress(@RequestHeader("Authorization") String authHeader,
                                                    @PathVariable Long courseId) {
@@ -40,6 +54,7 @@ public class ProgressController {
         return ResponseEntity.ok(courseProgress.getId());
 
     };
+
 
 
     @GetMapping("/module/{moduleId}")

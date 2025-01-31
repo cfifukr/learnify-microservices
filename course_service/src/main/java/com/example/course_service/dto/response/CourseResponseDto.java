@@ -103,10 +103,12 @@ public class CourseResponseDto {
         dto.setTimesBought(course.getTimesBought());
         dto.setPrice(course.getPrice());
 
-        dto.setModules(course.getModules()
-                .stream().map(i -> CourseModuleResponseDto.getDto(i))
-                .collect(Collectors.toSet()));
+        if(course.getModules()!=null) {
+            dto.setModules(course.getModules()
+                    .stream().map(i -> CourseModuleResponseDto.getDto(i))
+                    .collect(Collectors.toSet()));
 
+        }
         return dto;
     }
 }

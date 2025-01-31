@@ -1,6 +1,7 @@
 package com.example.core;
 
 
+import java.util.Objects;
 
 public class UserEnrolledEvent {
     private String courseProgressId;
@@ -47,5 +48,28 @@ public class UserEnrolledEvent {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEnrolledEvent that = (UserEnrolledEvent) o;
+        return Objects.equals(courseProgressId, that.courseProgressId) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseProgressId, name, surname, email);
+    }
+
+    @Override
+    public String toString() {
+        return "UserEnrolledEvent{" +
+                "courseProgressId='" + courseProgressId + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

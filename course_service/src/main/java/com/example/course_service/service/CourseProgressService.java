@@ -49,11 +49,19 @@ public class CourseProgressService {
 
     }
 
+
     public CourseProgress getCourseProgressById(Long courseProgressId) {
         return courseProgressRepository.findById(courseProgressId)
                 .orElseThrow(() -> new CourseNotFoundException("CourseProgress with id " + courseProgressId + " not found"));
     }
 
+    public Course getCourseByCourseProgressId(Long courseProgressId) {
+        CourseProgress courseProgress = getCourseProgressById(courseProgressId);
+
+        Course course = courseService.getCourseById(courseProgress.getCourseId());
+
+        return course;
+    }
 
 
 }
