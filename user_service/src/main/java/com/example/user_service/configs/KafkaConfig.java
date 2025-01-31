@@ -1,6 +1,6 @@
 package com.example.user_service.configs;
 
-import com.example.user_service.event.UserEnrolledEvent;
+import com.example.core.UserEnrolledEvent;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,9 +30,6 @@ public class KafkaConfig {
     private String acks;
 
 
-    @Value("${kafka.brokers-number}")
-    private int replicas;
-
     Map<String, Object> producerConfigs (){
         Map<String, Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, servers);
@@ -59,7 +56,7 @@ public class KafkaConfig {
         return TopicBuilder
                 .name("user_enrolled_for_course")
                 .partitions(3)
-                .replicas(replicas)
+                .replicas(0)
                 .build();
     }
 }

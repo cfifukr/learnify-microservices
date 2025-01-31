@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/progress")
+@RequestMapping("/api/v1/progress")
 public class ProgressController {
     private final CourseProgressService courseProgressService;
     private final ModuleProgressService moduleProgressService;
@@ -37,7 +37,7 @@ public class ProgressController {
 
         CourseProgress courseProgress = courseProgressService.createProgressObject(token, courseId);
 
-        return ResponseEntity.ok(CourseProgressResponseDto.getDtoWithModules(courseProgress));
+        return ResponseEntity.ok(courseProgress.getId());
 
     };
 
