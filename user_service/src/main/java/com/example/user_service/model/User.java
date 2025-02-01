@@ -43,8 +43,8 @@ public class User {
 
     public boolean addCourseEnrolled(String id){
         if(coursesEnrolledIds.size() >= 25){return false;}
-
         coursesEnrolledIds.add(id);
+        coursesEnrolledIds.remove("");
 
         return true;
 
