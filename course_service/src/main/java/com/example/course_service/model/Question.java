@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class Question {
@@ -16,12 +15,12 @@ public class Question {
     private String question;
 
     @ElementCollection
-    @CollectionTable(name = "question_answers", joinColumns = @JoinColumn(name = "question_id"))
-    private Set<String> answers;
+    @CollectionTable(name = "question_options", joinColumns = @JoinColumn(name = "question_id"))
+    private List<String> options;
 
     @ElementCollection
-    @CollectionTable(name = "question_correct_answers", joinColumns = @JoinColumn(name = "question_id"))
-    private List<String> correctAnswers;
+    @CollectionTable(name = "question_answers", joinColumns = @JoinColumn(name = "question_id"))
+    private List<String> answers;
 
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
@@ -32,15 +31,23 @@ public class Question {
 
     public Question() {}
 
-    public Question(String question, Set<String> answers,
-                    List<String> correctAnswers, QuestionType questionType,
+    public Question(String question, List<String> answers,
+                    List<String> options, QuestionType questionType,
                     AssessmentTask assessmentTask) {
         this.question = question;
         this.answers = answers;
-        this.correctAnswers = correctAnswers;
+        this.options = options;
         this.questionType = questionType;
         this.assessmentTask = assessmentTask;
 
+    }
+
+    public AssessmentTask getAssessmentTask() {
+        return assessmentTask;
+    }
+
+    public void setAssessmentTask(AssessmentTask assessmentTask) {
+        this.assessmentTask = assessmentTask;
     }
 
     public Long getId() {
@@ -59,20 +66,20 @@ public class Question {
         this.question = question;
     }
 
-    public Set<String> getAnswers() {
+    public List<String> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Set<String> answers) {
+    public void setAnswers(List<String> answers) {
         this.answers = answers;
     }
 
-    public List<String> getCorrectAnswers() {
-        return correctAnswers;
+    public List<String> getOptions() {
+        return options;
     }
 
-    public void setCorrectAnswers(List<String> correctAnswers) {
-        this.correctAnswers = correctAnswers;
+    public void setOptions(List<String> options) {
+        this.options = options;
     }
 
     public QuestionType getQuestionType() {
@@ -87,12 +94,12 @@ public class Question {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Question question1 = (Question) o;
-        return Objects.equals(id, question1.id) && Objects.equals(question, question1.question) && Objects.equals(answers, question1.answers) && Objects.equals(correctAnswers, question1.correctAnswers) && questionType == question1.questionType;
+        return Objects.equals(id, question1.id) && Objects.equals(question, question1.question) && Objects.equals(answers, question1.answers) && Objects.equals(options, question1.options) && questionType == question1.questionType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, question, answers, correctAnswers, questionType);
+        return Objects.hash(id, question, answers, options, questionType);
     }
 
     @Override
@@ -101,7 +108,7 @@ public class Question {
                 "id=" + id +
                 ", question='" + question + '\'' +
                 ", answers=" + answers +
-                ", correctAnswers=" + correctAnswers +
+                ", options=" + options +
                 ", questionType=" + questionType +
                 '}';
     }

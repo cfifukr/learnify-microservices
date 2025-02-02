@@ -1,5 +1,7 @@
 package com.example.course_service.model;
 
+import com.example.course_service.dto.create.TaskCreateDto;
+import com.example.course_service.dto.response.TaskResponseDto;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -28,6 +30,10 @@ public abstract class Task {
     }
 
     public Task() {}
+
+
+    public abstract TaskResponseDto toDto();
+
 
     public Long getId() {
         return id;
@@ -69,15 +75,28 @@ public abstract class Task {
         this.courseModule = courseModule;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(isTest, task.isTest) && Objects.equals(courseModule, task.courseModule);
+        return Objects.equals(id, task.id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(isTest, task.isTest);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, title, description, isTest);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", isTest=" + isTest +
+                ", courseModule=" + courseModule +
+                '}';
     }
 }
