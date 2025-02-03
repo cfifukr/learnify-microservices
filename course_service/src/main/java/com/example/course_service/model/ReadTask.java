@@ -3,6 +3,7 @@ package com.example.course_service.model;
 import com.example.course_service.dto.response.ReadTaskResponseDto;
 import com.example.course_service.dto.response.TaskResponseDto;
 import com.example.course_service.dto.response.VideoTaskResponseDto;
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Data;
@@ -10,6 +11,7 @@ import lombok.Data;
 @Entity
 @DiscriminatorValue("read")
 public class ReadTask extends Task{
+    @Column(length = 1000)
     private String text;
 
     public ReadTask(Long id, String title, String description, Boolean isTest, CourseModule courseModule, String text) {

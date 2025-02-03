@@ -39,9 +39,11 @@ public class TaskService {
         CourseModule module = courseModuleRepository.findById(createDto.getModuleId())
                 .orElseThrow(()-> new ModuleNotFoundException("Module not found with id: " + createDto.getModuleId()));
 
+
         Task task = createDto.toTask(module);
 
         taskRepository.save(task);
+
         return task;
     }
 

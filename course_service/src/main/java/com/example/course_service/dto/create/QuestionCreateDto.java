@@ -17,7 +17,6 @@ public class QuestionCreateDto {
     private String type;
     private List<String> options;
     private List<String> answers;
-    private Long taskId;
 
 
     public Question toQuestion() {

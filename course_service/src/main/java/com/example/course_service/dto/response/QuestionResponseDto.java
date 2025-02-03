@@ -19,7 +19,6 @@ public class QuestionResponseDto{
     private List<String> options;
     private List<String> answers;
     private String questionType;
-    private Long assessmentTaskId;
 
 
     public static QuestionResponseDto toDto(Question question){
@@ -29,7 +28,6 @@ public class QuestionResponseDto{
                 .options(question.getOptions())
                 .answers(question.getAnswers())
                 .questionType(question.getQuestionType().toString())
-                .assessmentTaskId(question.getAssessmentTask().getId())
                 .build();
     }
 }

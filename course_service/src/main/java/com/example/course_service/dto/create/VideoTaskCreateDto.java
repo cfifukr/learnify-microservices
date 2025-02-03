@@ -1,12 +1,15 @@
 package com.example.course_service.dto.create;
 
 import com.example.course_service.model.CourseModule;
+import com.example.course_service.model.Question;
 import com.example.course_service.model.Task;
 import com.example.course_service.model.VideoTask;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +26,7 @@ public class VideoTaskCreateDto implements TaskCreateDto{
     public Long getModuleId() {
         return this.moduleId;
     }
+
 
     @Override
     public Task toTask(CourseModule courseModule) {

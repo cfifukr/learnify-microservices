@@ -25,10 +25,6 @@ public class Question {
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assessment_task_id", nullable = false)
-    private AssessmentTask assessmentTask;
-
     public Question() {}
 
     public Question(String question, List<String> answers,
@@ -38,17 +34,9 @@ public class Question {
         this.answers = answers;
         this.options = options;
         this.questionType = questionType;
-        this.assessmentTask = assessmentTask;
 
     }
 
-    public AssessmentTask getAssessmentTask() {
-        return assessmentTask;
-    }
-
-    public void setAssessmentTask(AssessmentTask assessmentTask) {
-        this.assessmentTask = assessmentTask;
-    }
 
     public Long getId() {
         return id;

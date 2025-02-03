@@ -6,10 +6,7 @@ import com.example.course_service.dto.response.ReadTaskResponseDto;
 import com.example.course_service.dto.response.TaskResponseDto;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -18,8 +15,8 @@ import java.util.stream.Collectors;
 public class AssessmentTask extends Task {
 
 
-    @OneToMany(mappedBy = "assessmentTask", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Question> questions;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Question> questions = new HashSet<>();
 
     public AssessmentTask() {}
 

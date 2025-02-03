@@ -24,12 +24,15 @@ public class AssessmentTaskCreateDto implements TaskCreateDto {
         return this.moduleId;
     }
 
+
+
     @Override
     public AssessmentTask toTask(CourseModule courseModule) {
         AssessmentTask assessmentTask = new AssessmentTask();
         assessmentTask.setTitle(title);
         assessmentTask.setDescription(description);
         assessmentTask.setTest(true);
+        assessmentTask.setCourseModule(courseModule);
 
         if (questions != null) {
             questions.forEach(questionDto -> {
