@@ -2,18 +2,19 @@ package com.example.user_service.service;
 
 
 import com.example.user_service.dto.request.UserCreateDto;
-import com.example.user_service.exception.RoleNotFoundException;
-import com.example.user_service.model.Role;
+import com.example.user_service.exception.UserNotFoundException;
 import com.example.user_service.model.User;
-import com.example.user_service.repository.RoleRepository;
-import com.example.user_service.repository.UserRepository;
-import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.example.user_service.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
+    private final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private final UserRepository userRepository;
 
 
     public UserService(UserRepository userRepository){
@@ -21,26 +22,31 @@ public class UserService {
     }
 
 
-    public Optional<User> getUserById(Long id){
-        if(id == null){
-            return Optional.empty();
-        }
-        return userRepository.findById(id);
+    @Transactional(readOnly = true)
+    public User getUserById(Long id){
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+        logger.info("User found with id: {}", id);
+        return user;
     }
 
-    public Optional<User> getUserByKeycloakId(String id){
-        if(id.isEmpty()){
-            return Optional.empty();
-        }
+    @Transactional(readOnly = true)
+    public User getUserByKeycloakId(String keycloakId){
 
-        return userRepository.findByKeycloakId(id);
+        User user = userRepository.findByKeycloakId(keycloakId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with keycloakId: " + keycloakId));
+        logger.info("User found with keycloakId: {}",  keycloakId);
+        return user;
     }
 
+    @Transactional
     public User createUser(UserCreateDto userCreateDto, String keycloakId){
 
         User user = userCreateDto.createUser(keycloakId);
-
-        return userRepository.save(user);
+        userRepository.save(user);
+        logger.info("User with id: {} and keycloakId: {} was saved to database", user.getId(), user.getKeycloakId());
+        return user;
 
     }
 

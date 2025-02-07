@@ -1,11 +1,7 @@
 package com.example.user_service.dto.request;
 
 
-import com.example.user_service.model.Role;
 import com.example.user_service.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
 public class UserCreateDto {

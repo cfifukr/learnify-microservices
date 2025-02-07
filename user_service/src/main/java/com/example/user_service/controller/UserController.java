@@ -2,6 +2,7 @@ package com.example.user_service.controller;
 
 
 import com.example.user_service.dto.request.UserCreateDto;
+import com.example.user_service.dto.request.UserLoginDto;
 import com.example.user_service.dto.response.TokenResponse;
 import com.example.user_service.dto.response.UserResponseDto;
 import com.example.user_service.model.User;
@@ -13,14 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.Optional;
 
 @Slf4j
 @RestController
 @RequestMapping("api/v1/user")
 public class UserController {
-    private UserService userService;
-    private KeycloakService keycloakService;
+    private final  UserService userService;
+    private final KeycloakService keycloakService;
 
     public UserController(UserService userService,
                           KeycloakService keycloakService){
@@ -31,13 +31,17 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable Long userId){
-        Optional<User> userOpt = userService.getUserById(userId);
+        User user = userService.getUserById(userId);
 
-        if(userOpt.isEmpty()){
-            return ResponseEntity.noContent().build();
-        }
+        return ResponseEntity.ok(UserResponseDto.getDto(user));
+    }
 
-        return ResponseEntity.ok(UserResponseDto.getDto(userOpt.get()));
+
+    @GetMapping("/keycloak/{keycloakId}")
+    public ResponseEntity<?> getUserByKeycloakId(@PathVariable String keycloakId){
+        User user = userService.getUserByKeycloakId(keycloakId);
+
+        return ResponseEntity.ok(UserResponseDto.getDto(user));
     }
 
 
@@ -52,14 +56,14 @@ public class UserController {
                 request.getPassword()
         );
 
-
         User user = userService.createUser(request, keycloakId);
 
         return ResponseEntity.ok(UserResponseDto.getDto(user));
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<?> login(@RequestBody UserCreateDto request) {
+    public ResponseEntity<?> login(@RequestBody UserLoginDto request) {
+        log.info("Login request by: {}", request.getUsername());
 
 
         try {
@@ -69,7 +73,7 @@ public class UserController {
 
         }catch (HttpClientErrorException exception){
 
-            log.info("User {} couldn`t login", request.getUsername());
+            log.warn("User {} couldn`t login", request.getUsername());
 
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
 

@@ -1,6 +1,8 @@
 package com.example.user_service.service;
 
 import com.example.user_service.dto.response.TokenResponse;
+import com.example.user_service.exception.KeycloakException;
+import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -8,6 +10,8 @@ import org.keycloak.admin.client.resource.RoleMappingResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -17,6 +21,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 
@@ -48,12 +53,15 @@ public class KeycloakService {
 
     private final RestTemplate restTemplate;
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     public KeycloakService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
     }
 
 
-    public String registerUser(String username, String email, String firstName, String lastName, String password) {
+
+    public String registerUser(String username, String email, String firstName, String lastName, String password){
         Keycloak keycloak = KeycloakBuilder.builder()
                 .serverUrl(keycloakServerUrl)
                 .realm(realm)
@@ -61,8 +69,7 @@ public class KeycloakService {
                 .clientSecret(clientSecret)
                 .username(adminUsername)
                 .password(adminPassword)
-                .grantType("password")
-                .build();
+                .grantType("password").build();
 
         UserRepresentation user = new UserRepresentation();
         user.setUsername(username);
@@ -79,14 +86,28 @@ public class KeycloakService {
 
         user.setCredentials(Collections.singletonList(passwordCredential));
 
-        String userId = keycloak.realm(realm).users().create(user).getLocation().getPath().split("/")[5];
+        List<UserRepresentation> usersByUsername = keycloak.realm(realm).users().search(user.getUsername());
+        if (!usersByUsername.isEmpty()){
+            logger.error("**Keycloak** User with username {} already exists in keycloak", user.getUsername());
+            throw new KeycloakException("User already exists with username: " + user.getUsername());
+        }
+
+        List<UserRepresentation> usersByEmail = keycloak.realm(realm).users().search(null, null, null, user.getEmail(), 0, 10);
+        if (!usersByEmail.isEmpty()){
+            logger.error("**Keycloak** User with email {} already exists in keycloak", user.getEmail());
+            throw new KeycloakException("User already exists with email: " + user.getEmail());
+        }
+
+        Response response = keycloak.realm(realm).users().create(user);
+
+        String userId = response.getLocation().getPath().split("/")[5];
+        log.info("**Keycloak** User created in Keycloak with username: {} and keycloakId: {}", username, userId);
 
 
         RoleRepresentation role = keycloak.realm(realm).roles().get(defaultRole).toRepresentation();
         RoleMappingResource roleMappingResource = keycloak.realm(realm).users().get(userId).roles();
         roleMappingResource.realmLevel().add(Collections.singletonList(role));
 
-        log.info("User created: {}", username);
 
         return userId;
     }
@@ -107,23 +128,19 @@ public class KeycloakService {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
 
-        try {
-            ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
+        ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
 
-            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
-                Map<String, Object> responseBody = response.getBody();
-                return new TokenResponse(
-                        (String) responseBody.get("access_token"),
-                        (String) responseBody.get("refresh_token"),
-                        ((Number) responseBody.get("expires_in")).longValue(),
-                        ((Number) responseBody.get("refresh_expires_in")).longValue()
-                );
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+            Map<String, Object> responseBody = response.getBody();
+            return new TokenResponse(
+                    (String) responseBody.get("access_token"),
+                    (String) responseBody.get("refresh_token"),
+                    ((Number) responseBody.get("expires_in")).longValue(),
+                    ((Number) responseBody.get("refresh_expires_in")).longValue()
+            );
         }
 
-        log.info("User not found with username {} and password {}", username, password);
+
 
         return null;
     }

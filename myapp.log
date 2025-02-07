@@ -1,5 +1,4 @@
-2025-02-04T00:01:22.904+02:00  INFO 91829 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2025-02-04T00:17:01.235+02:00  WARN 91829 --- [user-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=14m40s338ms).
-2025-02-04T00:20:33.376+02:00  INFO 91829 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2025-02-04T00:23:51.701+02:00  WARN 91829 --- [user-service] [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m20s401ms).
-2025-02-04T00:27:23.789+02:00  INFO 91829 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-02-08T00:00:24.186+02:00  INFO 3796 --- [user-service] [AsyncResolver-bootstrap-executor-%d] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-02-08T00:02:09.803+02:00  INFO 3796 --- [user-service] [http-nio-auto-1-exec-10] c.e.u.controller.UserController          : Login request by: test
+2025-02-08T00:02:09.931+02:00  INFO 3796 --- [user-service] [http-nio-auto-1-exec-10] c.e.u.controller.UserController          : User test logged in
+2025-02-08T00:04:36.134+02:00  INFO 3796 --- [user-service] [kafka-producer-network-thread | user-service-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=user-service-producer-1] Node -1 disconnected.

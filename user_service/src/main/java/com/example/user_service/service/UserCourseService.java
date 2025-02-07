@@ -14,7 +14,6 @@ import org.springframework.http.*;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -35,9 +34,6 @@ public class UserCourseService {
 
     private final JwtUtils jwtUtils = new JwtUtils();
 
-
-    private final String baseUrlCourse = "http://COURSE-SERVICE";
-
     @Value("${url.course-service.course-progress}")
     private String progressUrl;
 
@@ -52,11 +48,13 @@ public class UserCourseService {
 
     @Transactional
     public List<String> enrollUserForCourse(String token, String courseId) {
+        String baseUrlCourse = "http://COURSE-SERVICE";
+
 
         // Getting User object
         String keycloakId = jwtUtils.extractKeycloakId(token);
         User user = userRepository.findByKeycloakId(keycloakId)
-                .orElseThrow(() -> new UserNotFoundException("User with id " + keycloakId + " not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found with keycloakId: " + keycloakId));
 
         // HttpRequest to  Course service to make CourseProgress ang return its id
         HttpHeaders headers = new HttpHeaders();
@@ -69,6 +67,8 @@ public class UserCourseService {
                 .append(progressUrl)
                 .append("/course/")
                 .append(courseId).toString();
+
+
         try {
             ResponseEntity<String> response = restTemplate.exchange(
                     url,
@@ -104,7 +104,6 @@ public class UserCourseService {
             });
 
         } catch (Exception ex) {
-            ex.printStackTrace();
             return null;
         }
 

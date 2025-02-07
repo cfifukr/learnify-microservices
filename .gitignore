@@ -31,6 +31,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Custom ###
+/kafka1-data
+
 ### VS Code ###
 .vscode/
 

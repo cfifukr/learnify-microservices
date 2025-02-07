@@ -1,8 +1,6 @@
 package com.example.user_service;
 
-import com.example.user_service.model.Role;
 import com.example.user_service.model.User;
-import com.example.user_service.repository.RoleRepository;
 import com.example.user_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,11 +11,12 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class UserServiceApplication implements CommandLineRunner {
-    @Autowired
-    private RoleRepository roleRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserServiceApplication(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class, args);
