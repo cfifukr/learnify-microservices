@@ -38,6 +38,7 @@ build/
 /user_service/src/main/resources/application.properties
 /discovery_service/src/main/resources/application.properties
 /gateway/src/main/resources/application.properties
+/statistic_service/src/main/resources/application.properties
 
 ### VS Code ###
 .vscode/

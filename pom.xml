@@ -15,9 +15,7 @@
         <version>3.4.1</version>
         <relativePath/>
 
-
     </parent>
-
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
