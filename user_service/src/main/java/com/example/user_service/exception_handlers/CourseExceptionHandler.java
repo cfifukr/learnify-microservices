@@ -1,6 +1,7 @@
 package com.example.user_service.exception_handlers;
 
 import com.example.user_service.controller.CoursesController;
+import com.example.user_service.exception.CourseExceededLimitException;
 import com.example.user_service.exception.KeycloakException;
 import com.example.user_service.exception.UserNotFoundException;
 import org.slf4j.Logger;
@@ -30,6 +31,12 @@ public class CourseExceptionHandler {
     public ResponseEntity<String> handleKeycloakException(KeycloakException e) {
 
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CourseExceededLimitException.class)
+    private ResponseEntity<String> handleCourseExceededLimitException(CourseExceededLimitException e) {
+        logger.error(e.getMessage());
+        return new ResponseEntity<>("The limit of courses is exceeded", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

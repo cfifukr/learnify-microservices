@@ -79,7 +79,7 @@ public class UserCourseService {
 
             //add returned id of course progress to user
             System.out.println(response.getBody());
-            user.addCourseEnrolled(response.getBody());
+            user.getCoursesData().addCourseEnrolled(response.getBody());
 
             //sending notification on email about enrollment on course
             UserEnrolledEvent userEnrolledEvent = new UserEnrolledEvent();
@@ -107,7 +107,7 @@ public class UserCourseService {
             return null;
         }
 
-        return userRepository.save(user).getCoursesEnrolledIds();
+        return userRepository.save(user).getCoursesData().getCoursesEnrolledIds();
 
     }
 
@@ -117,9 +117,9 @@ public class UserCourseService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found"));
 
-        user.deleteCourseEnrolled(courseId);
+        user.getCoursesData().deleteCourseEnrolled(courseId);
 
-        return userRepository.save(user).getCoursesEnrolledIds();
+        return userRepository.save(user).getCoursesData().getCoursesEnrolledIds();
 
     }
 }

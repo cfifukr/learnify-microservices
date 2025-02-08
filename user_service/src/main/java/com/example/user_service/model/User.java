@@ -21,11 +21,11 @@ public class User {
 
     @Column(unique = true)
     private String keycloakId;
+
     private Double balance;
 
-    @Convert(converter = StringListConverter.class)
-    private List<String> coursesEnrolledIds = new ArrayList<>();
-
+    @OneToOne(cascade = CascadeType.ALL)
+    private CoursesData coursesData;
 
 
     public User() {
@@ -37,27 +37,11 @@ public class User {
         this.email = email;
         this.keycloakId = keycloakId;
         this.balance = 0.00;
+        this.coursesData = new CoursesData(this);
     }
 
 
 
-    public boolean addCourseEnrolled(String id){
-        if(coursesEnrolledIds.size() >= 25){return false;}
-        coursesEnrolledIds.add(id);
-        coursesEnrolledIds.remove("");
-
-        return true;
-
-    }
-
-    public void deleteCourseEnrolled(String id){
-        coursesEnrolledIds.remove(id);
-    }
-
-
-    public List<String> getCoursesEnrolledIds() {
-        return coursesEnrolledIds;
-    }
 
     public Long getId() {
         return id;
@@ -105,6 +89,14 @@ public class User {
 
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    public CoursesData getCoursesData() {
+        return coursesData;
+    }
+
+    public void setCoursesData(CoursesData coursesData) {
+        this.coursesData = coursesData;
     }
 
     @Override

@@ -33,6 +33,11 @@ build/
 
 ### Custom ###
 /kafka1-data
+/notification_service/src/main/resources/application.properties
+/course_service/src/main/resources/application.properties
+/user_service/src/main/resources/application.properties
+/discovery_service/src/main/resources/application.properties
+/gateway/src/main/resources/application.properties
 
 ### VS Code ###
 .vscode/

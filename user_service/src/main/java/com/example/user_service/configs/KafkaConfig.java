@@ -39,7 +39,7 @@ public class KafkaConfig {
         config.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
 
         return config;
-    };
+    }
 
     @Bean
     ProducerFactory<String, UserEnrolledEvent> producerFactory(){

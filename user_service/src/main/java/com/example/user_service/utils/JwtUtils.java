@@ -32,12 +32,11 @@ public class JwtUtils {
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(decodedKey);
             PublicKey key = keyFactory.generatePublic(keySpec);
 
-            Claims claims = Jwts.parser()
+            return Jwts.parser()
                     .setSigningKey(key)
                     .parseClaimsJws(token)
                     .getBody();
 
-            return claims;
 
         } catch (Exception e) {
             logger.error(e.getMessage());
