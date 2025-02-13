@@ -11,4 +11,5 @@ public interface CourseModuleRepository extends JpaRepository<CourseModule, Long
 
     @Query("SELECT cm FROM CourseModule cm WHERE cm.course.id = :courseId ORDER BY cm.place")
     Page<CourseModule> getCourseModulesByCourseId(@Param("courseId") Long courseId, Pageable pageable);
+
 }

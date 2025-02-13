@@ -15,7 +15,7 @@ public class Course {
     private String name;
     private String description;
     private Double price;
-    private Long creatorId;
+    private String creatorKeycloakId;
     private Integer timesBought;
     private Double rating;
 
@@ -58,12 +58,12 @@ public class Course {
         this.price = price;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public String getCreatorId() {
+        return creatorKeycloakId;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
+    public void setCreatorId(String creatorId) {
+        this.creatorKeycloakId = creatorId;
     }
 
     public Integer getTimesBought() {

@@ -4,6 +4,7 @@ package com.example.course_service.controller;
 import com.example.course_service.dto.PageDto;
 import com.example.course_service.dto.create.CourseCreateDto;
 import com.example.course_service.dto.response.CourseResponseDto;
+import com.example.course_service.dto.update.CourseUpdateDto;
 import com.example.course_service.exceptions.CourseNotFoundException;
 import com.example.course_service.model.Course;
 import com.example.course_service.service.CourseService;
@@ -49,10 +50,25 @@ public class CourseController {
     }
 
     @PostMapping
-    private ResponseEntity<?> createCourse(@RequestBody CourseCreateDto createDto){
-        Course course = courseService.saveCourse(createDto);
-        return ResponseEntity.ok(course);
+    private ResponseEntity<?> createCourse(@RequestHeader("Authorization") String authHeader,
+                                           @RequestBody CourseCreateDto createDto){
+        String token = authHeader.substring(7);
+        Course course = courseService.createCourse(createDto, token);
+
+        return ResponseEntity.ok(CourseResponseDto.getDto(course));
     }
+
+    @PutMapping
+    private ResponseEntity<?> updateCourseCourseById(@RequestHeader("Authorization") String authHeader,
+                                                    @RequestBody CourseUpdateDto updateDto){
+        String token = authHeader.replace("Bearer ", "");
+
+        Course course = courseService.updateCourse(updateDto, token);
+
+        return ResponseEntity.ok(CourseResponseDto.getDto(course));
+    }
+
+
 
 
 }

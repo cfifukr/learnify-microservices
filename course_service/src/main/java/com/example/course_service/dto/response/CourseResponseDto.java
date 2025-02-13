@@ -12,7 +12,7 @@ public class CourseResponseDto {
     private String name;
     private String description;
     private Double price;
-    private Long creatorId;
+    private String creatorId;
     private Integer timesBought;
     private Double rating;
     private Set<String> categories;
@@ -52,11 +52,11 @@ public class CourseResponseDto {
         this.price = price;
     }
 
-    public Long getCreatorId() {
+    public String getCreatorId() {
         return creatorId;
     }
 
-    public void setCreatorId(Long creatorId) {
+    public void setCreatorId(String creatorId) {
         this.creatorId = creatorId;
     }
 

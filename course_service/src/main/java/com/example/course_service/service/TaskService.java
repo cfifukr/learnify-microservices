@@ -1,15 +1,12 @@
 package com.example.course_service.service;
 
 
-import com.example.course_service.dto.create.AssessmentTaskCreateDto;
 import com.example.course_service.dto.create.TaskCreateDto;
 import com.example.course_service.exceptions.ModuleNotFoundException;
 import com.example.course_service.exceptions.TaskNotFoundException;
-import com.example.course_service.model.AssessmentTask;
 import com.example.course_service.model.CourseModule;
 import com.example.course_service.model.Task;
 import com.example.course_service.repository.CourseModuleRepository;
-import com.example.course_service.repository.QuestionRepository;
 import com.example.course_service.repository.TaskRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,14 +16,11 @@ import org.springframework.stereotype.Service;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final CourseModuleRepository courseModuleRepository;
-    private final QuestionRepository questionRepository;
 
     public TaskService(TaskRepository taskRepository,
-                       CourseModuleRepository courseModuleRepository,
-                       QuestionRepository questionRepository) {
+                       CourseModuleRepository courseModuleRepository) {
       this.taskRepository = taskRepository;
       this.courseModuleRepository = courseModuleRepository;
-      this.questionRepository = questionRepository;
     }
 
     public Page<Task> getAllPageable(Pageable pageable){
@@ -41,8 +35,11 @@ public class TaskService {
 
 
         Task task = createDto.toTask(module);
-
         taskRepository.save(task);
+
+
+        module.getTasks().add(task);
+        courseModuleRepository.save(module);
 
         return task;
     }
