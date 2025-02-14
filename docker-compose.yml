@@ -97,3 +97,4 @@ volumes:
   mysql-users-data:
   mysql-courses-data:
   keycloak_data:
+  postgres-statistic-data:

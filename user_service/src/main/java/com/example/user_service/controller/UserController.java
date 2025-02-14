@@ -8,11 +8,18 @@ import com.example.user_service.dto.response.UserResponseDto;
 import com.example.user_service.model.User;
 import com.example.user_service.service.KeycloakService;
 import com.example.user_service.service.UserService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Slf4j
@@ -21,6 +28,7 @@ import org.springframework.web.client.HttpClientErrorException;
 public class UserController {
     private final  UserService userService;
     private final KeycloakService keycloakService;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public UserController(UserService userService,
                           KeycloakService keycloakService){
@@ -47,7 +55,21 @@ public class UserController {
 
 
     @PostMapping(value = "/register")
-    public ResponseEntity<?> register(@RequestBody UserCreateDto request) {
+    public ResponseEntity<?> register(@Valid @RequestBody UserCreateDto request,
+                                      BindingResult result) {
+
+        if (result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            result.getFieldErrors().forEach(error -> {
+                        errors.put(error.getField(), error.getDefaultMessage());
+                        logger.warn("RegistrationDto validation error - {}", error.getDefaultMessage());
+                    }
+            );
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+
+
         String keycloakId =  keycloakService.registerUser(
                 request.getUsername(),
                 request.getEmail(),
@@ -62,8 +84,21 @@ public class UserController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginDto request) {
+    public ResponseEntity<?> login(@Valid @RequestBody UserLoginDto request,
+                                   BindingResult result) {
         log.info("Login request by: {}", request.getUsername());
+
+        if (result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            result.getFieldErrors().forEach(error -> {
+                        errors.put(error.getField(), error.getDefaultMessage());
+                        logger.warn("LoginDto validation error - {}", error.getDefaultMessage());
+                    }
+            );
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+
 
 
         try {
