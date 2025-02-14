@@ -12,12 +12,16 @@ public class ModuleProgress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String keycloakId;
 
     @ManyToOne
     private CourseProgress courseProgress;
 
+    @Column(nullable = false)
     private Long moduleId;
+
+    @Column(nullable = false)
     private Boolean moduleStatus;
 
     @ElementCollection

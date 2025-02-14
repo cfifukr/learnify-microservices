@@ -12,6 +12,7 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 255)
     private String question;
 
     @ElementCollection
@@ -22,6 +23,7 @@ public class Question {
     @CollectionTable(name = "question_answers", joinColumns = @JoinColumn(name = "question_id"))
     private List<String> answers;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
 

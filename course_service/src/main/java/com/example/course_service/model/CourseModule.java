@@ -11,9 +11,14 @@ public class CourseModule {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(nullable = false, length = 50)
     private String name;
+
+    @Column(nullable = false)
     private Integer durationMinutes;
 
+    @Column(nullable = false)
     private Integer place;
 
     @ManyToOne
@@ -93,12 +98,12 @@ public class CourseModule {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CourseModule that = (CourseModule) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(durationMinutes, that.durationMinutes) && Objects.equals(place, that.place) && Objects.equals(course, that.course) && Objects.equals(that, that.tasks);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(durationMinutes, that.durationMinutes) && Objects.equals(place, that.place)  && Objects.equals(that, that.tasks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, durationMinutes, place, course, tasks);
+        return Objects.hash(id, name, durationMinutes, place, tasks);
     }
 
 

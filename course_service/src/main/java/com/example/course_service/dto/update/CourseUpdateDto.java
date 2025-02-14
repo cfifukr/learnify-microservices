@@ -2,6 +2,8 @@ package com.example.course_service.dto.update;
 
 
 import com.example.course_service.model.Course;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,9 +14,16 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 public class CourseUpdateDto {
+
+    @NotNull(message = "Course id can`t be null")
     private Long id;
+
+    @Size(min = 3, max = 50, message = "Course name length must be between 3 and 50 characters")
     private String name;
+
+    @Size(min = 3, max = 50, message = "Course name length must be between 3 and 50 characters")
     private String description;
+
     private Double price;
     private String creatorId;
     private Integer timesBought;

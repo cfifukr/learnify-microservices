@@ -12,9 +12,13 @@ public class CourseProgress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String keycloakId;
 
+    @Column(nullable = false)
     private Long courseId;
+
+    @Column(nullable = false)
     private Boolean status;
 
     @OneToMany

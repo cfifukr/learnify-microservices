@@ -2,21 +2,30 @@ package com.example.course_service.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Course {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 50)
     private String name;
+
+    @Column(nullable = true, length = 500)
     private String description;
+
+    @Column(nullable = false)
     private Double price;
+
+    @Column(nullable = false)
     private String creatorKeycloakId;
+
+    @Column(nullable = false)
     private Integer timesBought;
+
     private Double rating;
 
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
@@ -25,6 +34,20 @@ public class Course {
     @OneToMany(mappedBy="course", fetch = FetchType.EAGER)
     private Set<CourseModule> modules;
 
+    public Course() {
+    }
+
+    public Course(String name, Long id, String description, Double price, String creatorKeycloakId, Integer timesBought, Double rating, Set<String> categories, Set<CourseModule> modules) {
+        this.name = name;
+        this.id = id;
+        this.description = description;
+        this.price = price;
+        this.creatorKeycloakId = creatorKeycloakId;
+        this.timesBought = timesBought;
+        this.rating = rating;
+        this.categories = categories;
+        this.modules = modules;
+    }
 
     public Long getId() {
         return id;
@@ -97,4 +120,17 @@ public class Course {
     public void setModules(Set<CourseModule> modules) {
         this.modules = modules;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return Objects.equals(id, course.id) && Objects.equals(name, course.name) && Objects.equals(description, course.description) && Objects.equals(price, course.price) && Objects.equals(creatorKeycloakId, course.creatorKeycloakId) && Objects.equals(timesBought, course.timesBought) && Objects.equals(rating, course.rating) && Objects.equals(categories, course.categories);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, price, creatorKeycloakId, timesBought, rating, categories);
+    }
+
 }
