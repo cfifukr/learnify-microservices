@@ -41,6 +41,8 @@ public class CourseServiceApplication implements CommandLineRunner {
         course.setPrice(100.00);
         course.setDescription("Java course beginners friendly");
         course.setCategories(Set.of("Java", "Programming"));
+        course.setCreatorId("keycloak-123");
+        course.setTimesBought(0);
         courseRepository.save(course);
 
 
@@ -49,6 +51,8 @@ public class CourseServiceApplication implements CommandLineRunner {
         course2.setPrice(50.00);
         course2.setDescription("Advanced Java course beginners friendly");
         course2.setCategories(Set.of("Java", "Programming"));
+        course2.setCreatorId("keycloak-123");
+        course2.setTimesBought(1);
         courseRepository.save(course2);
 
         CourseModule module1 = new CourseModule("DataTypes", 100, course, 1);

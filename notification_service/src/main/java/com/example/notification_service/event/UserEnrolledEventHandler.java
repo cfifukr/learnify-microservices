@@ -10,7 +10,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
-@KafkaListener(topics = "user_enrolled_for_course", groupId = "group1")
+@KafkaListener(topics = "enrollment_for_course_notification_event", groupId = "group1")
 public class UserEnrolledEventHandler{
     private final MailNotificationService mailNotificationService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

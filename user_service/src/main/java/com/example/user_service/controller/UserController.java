@@ -8,13 +8,17 @@ import com.example.user_service.dto.response.UserResponseDto;
 import com.example.user_service.model.User;
 import com.example.user_service.service.KeycloakService;
 import com.example.user_service.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -22,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+@Validated
 @Slf4j
 @RestController
 @RequestMapping("api/v1/user")
@@ -38,7 +43,7 @@ public class UserController {
 
 
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getUserById(@PathVariable Long userId){
+    public ResponseEntity<?> getUserById(@PathVariable @NotNull Long userId){
         User user = userService.getUserById(userId);
 
         return ResponseEntity.ok(UserResponseDto.getDto(user));
@@ -46,7 +51,7 @@ public class UserController {
 
 
     @GetMapping("/keycloak/{keycloakId}")
-    public ResponseEntity<?> getUserByKeycloakId(@PathVariable String keycloakId){
+    public ResponseEntity<?> getUserByKeycloakId(@PathVariable @NotNull String keycloakId){
         User user = userService.getUserByKeycloakId(keycloakId);
 
         return ResponseEntity.ok(UserResponseDto.getDto(user));
@@ -55,19 +60,7 @@ public class UserController {
 
 
     @PostMapping(value = "/register")
-    public ResponseEntity<?> register(@Valid @RequestBody UserCreateDto request,
-                                      BindingResult result) {
-
-        if (result.hasErrors()) {
-            Map<String, String> errors = new HashMap<>();
-            result.getFieldErrors().forEach(error -> {
-                        errors.put(error.getField(), error.getDefaultMessage());
-                        logger.warn("RegistrationDto validation error - {}", error.getDefaultMessage());
-                    }
-            );
-            return ResponseEntity.badRequest().body(errors);
-        }
-
+    public ResponseEntity<?> register(@Valid @RequestBody UserCreateDto request) {
 
 
         String keycloakId =  keycloakService.registerUser(
@@ -85,19 +78,8 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> login(@Valid @RequestBody UserLoginDto request,
-                                   BindingResult result) {
+                                   BindingResult result, HttpServletResponse httpServletResponse) {
         log.info("Login request by: {}", request.getUsername());
-
-        if (result.hasErrors()) {
-            Map<String, String> errors = new HashMap<>();
-            result.getFieldErrors().forEach(error -> {
-                        errors.put(error.getField(), error.getDefaultMessage());
-                        logger.warn("LoginDto validation error - {}", error.getDefaultMessage());
-                    }
-            );
-            return ResponseEntity.badRequest().body(errors);
-        }
-
 
 
 
@@ -114,7 +96,7 @@ public class UserController {
 
         }
 
-
     }
+
 
 }

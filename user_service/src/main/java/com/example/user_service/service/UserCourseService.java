@@ -1,24 +1,22 @@
 package com.example.user_service.service;
 
-import com.example.core.UserEnrolledEvent;
 import com.example.user_service.exception.UserNotFoundException;
+import com.example.user_service.kafka_producers.KafkaProducerNotification;
+import com.example.user_service.kafka_producers.KafkaProducerStatistic;
 import com.example.user_service.model.User;
 import com.example.user_service.repository.UserRepository;
 import com.example.user_service.utils.JwtUtils;
 import jakarta.transaction.Transactional;
-import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-import java.util.concurrent.CompletableFuture;
 
 
 // WITH THIS SERVICE WORKS ONLY COURSE-MICROSERVICE
@@ -28,21 +26,27 @@ public class UserCourseService {
 
     private final UserRepository userRepository;
 
-    KafkaTemplate<String, UserEnrolledEvent> kafkaTemplate;
-
     private final RestTemplate restTemplate;
 
-    private final JwtUtils jwtUtils = new JwtUtils();
+    private final JwtUtils jwtUtils;
+
+    private final KafkaProducerNotification kafkaNotification;
+    private final KafkaProducerStatistic kafkaStatistic;
+
 
     @Value("${url.course-service.course-progress}")
     private String progressUrl;
 
     public UserCourseService(UserRepository userRepository,
                              RestTemplate restTemplate,
-                             KafkaTemplate<String, UserEnrolledEvent> kafkaTemplate) {
+                             JwtUtils jwtUtils,
+                             KafkaProducerNotification kafkaNotification,
+                             KafkaProducerStatistic kafkaStatistic) {
+        this.kafkaStatistic = kafkaStatistic;
         this.userRepository = userRepository;
         this.restTemplate  = restTemplate;
-        this.kafkaTemplate = kafkaTemplate;
+        this.jwtUtils = jwtUtils;
+        this.kafkaNotification = kafkaNotification;
     }
 
 
@@ -81,27 +85,9 @@ public class UserCourseService {
             System.out.println(response.getBody());
             user.getCoursesData().addCourseEnrolled(response.getBody());
 
-            //sending notification on email about enrollment on course
-            UserEnrolledEvent userEnrolledEvent = new UserEnrolledEvent();
-            userEnrolledEvent.setName(user.getName());
-            userEnrolledEvent.setSurname(user.getSurname());
-            userEnrolledEvent.setEmail(user.getEmail());
-            userEnrolledEvent.setCourseProgressId(courseId);
-
-            CompletableFuture<SendResult<String, UserEnrolledEvent>> future =
-                    kafkaTemplate.send("user_enrolled_for_course", courseId, userEnrolledEvent);
-
-
-            future.whenComplete((result, exception) -> {
-                if (exception == null) {
-                    RecordMetadata metadata = result.getRecordMetadata();
-                    logger.info("UserEnrollment sent successfully to topic 'user_enrolled_for_course' at partition [{}], offset [{}]",
-                              metadata.partition(), metadata.offset());
-                } else {
-                    logger.error("Failed to send UserEnrollment  to topic 'user_enrolled_for_course' due to: {}",
-                            exception.getMessage());
-                }
-            });
+            kafkaNotification.sendEnrollmentToNotification(user, courseId);
+            //TODO: add creatorKeycloakId to event or remove this field for event
+            kafkaStatistic.sendEnrollmentToStatistic(user.getKeycloakId(), "",Long.valueOf(courseId));
 
         } catch (Exception ex) {
             return null;

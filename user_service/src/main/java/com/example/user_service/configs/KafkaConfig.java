@@ -1,6 +1,7 @@
 package com.example.user_service.configs;
 
 import com.example.core.UserEnrolledEvent;
+import com.example.core.UserEnrolledStatisticEvent;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,20 +42,42 @@ public class KafkaConfig {
         return config;
     }
 
+    // Kafka to Notification service
     @Bean
-    ProducerFactory<String, UserEnrolledEvent> producerFactory(){
+    ProducerFactory<String, UserEnrolledEvent> producerFactoryNotification(){
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, UserEnrolledEvent> kafkaTemplate(){
-        return new KafkaTemplate<String, UserEnrolledEvent>(producerFactory());
+    public KafkaTemplate<String, UserEnrolledEvent> kafkaTemplateNotification(){
+        return new KafkaTemplate<String, UserEnrolledEvent>(producerFactoryNotification());
     }
 
     @Bean
-    NewTopic createTopic(){
+    NewTopic createTopicNotificationEnrolledEvent(){
         return TopicBuilder
-                .name("user_enrolled_for_course")
+                .name("enrollment_for_course_notification_event")
+                .partitions(3)
+                .replicas(0)
+                .build();
+    }
+
+    // Kafka to Statistic service
+    @Bean
+    ProducerFactory<String, UserEnrolledStatisticEvent> producerFactoryStatistic(){
+        return new DefaultKafkaProducerFactory<>(producerConfigs());
+    }
+
+    @Bean
+    KafkaTemplate<String, UserEnrolledStatisticEvent> kafkaTemplateStatistic(){
+        return new KafkaTemplate<>(producerFactoryStatistic());
+    }
+
+
+    @Bean
+    NewTopic createTopicStatisticEnrolledEvent(){
+        return TopicBuilder
+                .name("enrollment_for_course_statistic_event")
                 .partitions(3)
                 .replicas(0)
                 .build();

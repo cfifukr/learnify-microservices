@@ -2,7 +2,6 @@ package com.example.user_service;
 
 import com.example.user_service.model.User;
 import com.example.user_service.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,7 +23,7 @@ public class UserServiceApplication implements CommandLineRunner {
 
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         User user1 = new User("Name", "Surname",
                 "Email@gmail.com", "Keycloack1");

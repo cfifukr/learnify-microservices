@@ -3,8 +3,7 @@ package com.example.user_service.model;
 import com.example.user_service.utils.StringListConverter;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 @Entity
@@ -13,15 +12,19 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false, length = 15)
     private String name;
+
+    @Column(nullable = false, length = 15)
     private String surname;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false, length = 50)
     private String keycloakId;
 
+    @Column(nullable = false)
     private Double balance;
 
     @OneToOne(cascade = CascadeType.ALL)
