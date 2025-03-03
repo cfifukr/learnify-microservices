@@ -1,5 +1,6 @@
 package com.example.course_service.dto.update;
 
+import com.example.course_service.exceptions.TaskNotFoundException;
 import com.example.course_service.model.CourseProgress;
 import com.example.course_service.model.ModuleProgress;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,9 @@ public class ModuleProgressUpdateDto {
         }
 
         this.tasksStatus.keySet().forEach(key -> {
+            if(!this.tasksStatus.containsKey(key)){
+                throw new TaskNotFoundException("Task with id " + key + " not found");
+            }
             moduleProgress.getTasksStatus().put(key, this.tasksStatus.get(key));
         });
 

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Month;
 import java.time.Year;
+import java.util.HashMap;
 
 @Service
 public class YearStatService {
@@ -40,7 +41,7 @@ public class YearStatService {
     @Transactional
     public void incrementCourseStat(Long courseId, Month month) {
         YearStat yearStat = yearStatRepository.findByCourseIdAndYear(courseId, Year.now().getValue())
-                .orElseThrow(() -> new StatNotFoundException("YearStat not found for courseId: " + courseId));
+                .orElse(new YearStat(null, Year.now().getValue(), courseId, null, new HashMap<>()));
 
 
         incrementMonthlyCount(yearStat, month);

@@ -1,6 +1,8 @@
 package com.example.course_service.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +30,8 @@ public class ModuleProgress {
     @CollectionTable(name = "progress_map", joinColumns = @JoinColumn(name = "task_id"))
     @MapKeyColumn(name = "task_id_column")
     @Column(name = "status_column")
+    @Cascade(CascadeType.ALL)
+
     private Map<Long, Boolean> tasksStatus = new HashMap<>();
 
 

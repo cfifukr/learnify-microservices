@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashSet;
 
 @RestController
-@RequestMapping("/api/v1/progress")
+@RequestMapping("/api/v1/progress/course")
 public class ProgressController {
     private final CourseProgressService courseProgressService;
     private final ModuleProgressService moduleProgressService;
@@ -27,14 +27,14 @@ public class ProgressController {
         this.moduleProgressService = moduleProgressService;
     }
 
-    @GetMapping("/course/{courseId}")
+    @GetMapping("/{courseId}")
     public ResponseEntity<?> getCourseProgress(@PathVariable("courseId") Long courseId) {
         CourseProgress courseProgress = courseProgressService.getCourseProgressById(courseId);
 
         return ResponseEntity.ok(CourseProgressResponseDto.getDtoWithModules(courseProgress));
     }
 
-    @GetMapping("/course/{courseId}/course")
+    @GetMapping("/{courseId}/course")
     public ResponseEntity<?> getCourseByCourseProgressId(@PathVariable("courseId") Long courseProgressId) {
 
         Course course = courseProgressService.getCourseByCourseProgressId(courseProgressId);
@@ -44,7 +44,7 @@ public class ProgressController {
         );
     }
 
-    @PostMapping("/course/{courseId}")
+    @PostMapping("/{courseId}")
     private ResponseEntity<?> createCourseProgress(@RequestHeader("Authorization") String authHeader,
                                                    @PathVariable Long courseId) {
         String token = authHeader.substring(7);
@@ -55,26 +55,6 @@ public class ProgressController {
 
     };
 
-
-
-    @GetMapping("/module/{moduleId}")
-    private ResponseEntity<?> getModuleById(@PathVariable Long moduleId) {
-
-        ModuleProgress moduleProgress = moduleProgressService.getModuleProgressById(moduleId);
-
-        return ResponseEntity.ok(ModuleProgressResponseDto.getDto(moduleProgress));
-
-    };
-
-    @PutMapping("/module/{moduleId}")
-    private ResponseEntity<?> updateModule(@RequestBody ModuleProgressUpdateDto dto,
-                                           @PathVariable Long moduleId) {
-
-        ModuleProgress moduleProgress = moduleProgressService.updateModuleProgress(dto, moduleId);
-
-        return ResponseEntity.ok(ModuleProgressResponseDto.getDto(moduleProgress));
-
-    };
 
 
 
