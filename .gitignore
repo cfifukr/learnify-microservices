@@ -43,4 +43,4 @@ build/
 ### VS Code ###
 .vscode/
 
-**/node_modules/
+statistic_service/node_modules
